@@ -9,6 +9,7 @@ object Dependencies {
     val jettyWebappVersion = "9.4.18.v20190429"
     val servletApiVersion = "3.1.0"
 
+
     val slf4j = Seq( "org.slf4j" % "slf4j-api" % slf4jVersion )
 
     val logback = Seq( "ch.qos.logback" % "logback-classic" % logbackVersion )

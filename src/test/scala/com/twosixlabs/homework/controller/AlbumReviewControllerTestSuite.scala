@@ -1,6 +1,5 @@
 package com.twosixlabs.homework.controller
 
-import com.twosixlabs.homework.model.MyAlbumReviewJsonImplementation
 import org.scalatest.FlatSpecLike
 import org.scalatra.test.scalatest.ScalatraSuite
 
@@ -14,19 +13,15 @@ import org.scalatra.test.scalatest.ScalatraSuite
   */
 class AlbumReviewControllerTestSuite extends FlatSpecLike with ScalatraSuite {
 
-    addServlet( new AlbumReviewController with MyAlbumReviewJsonImplementation, "/*" )
+    addServlet( new AlbumReviewController, "/*" )
 
     //@formatter:off
 
-    "GET all" should "return reply OK with a list of all the albums" in {
-        get( "/reviews" ) {
-            status shouldBe 200
-        }
-    }
 
     "GET for existing artist" should "reply OK with a list of reviews" in {
-        get( "/review?artist=Amon Tobin" ) {
-           status shouldBe 200
+        get( "/review?artist=Amon_Tobin" ) {
+            response.body shouldBe "(Bricoalage,5.0)(Supermodified,4.5)"
+            status shouldBe 200
        }
     }
 
@@ -36,22 +31,10 @@ class AlbumReviewControllerTestSuite extends FlatSpecLike with ScalatraSuite {
         }
     }
 
-    "GET for existing album" should "reply OK with the album review for the title" in {
-        get( "/review?album=Ride the Skies" ) {
-            status shouldBe 200
-        }
-    }
-
-    "GET for non-existing album" should "reply NotFound for the album does not exist" in {
-        get( "review?artist=foobar" ) {
-            status shouldBe 404
-        }
-    }
-
     "GET for average score for an artist" should "return the average of the given artist" in {
-        get( "/scores/averages/Lightning Bolt" ) {
-            status shouldBe 200
-            response.body.toDouble shouldBe 3.4
+        get( "/scores/averages/Lightning_Bolt" ) {
+            response.status shouldBe 200
+            BigDecimal( response.body ) shouldBe 3.666666666666666666666666666666667
         }
     }
 }
